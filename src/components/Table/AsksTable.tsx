@@ -1,11 +1,10 @@
-import { Table, TableBody, TableHead, TableRow } from "@mui/material";
-import React, { FC } from "react";
-import { ResponseOrderRow } from "../../constants/types";
-import { useConfigContext } from "../contexts/useConfigContext";
-import { createRowData, formatOrders } from "../helpers";
-import { getDecimals } from "../helpers/getDecimals";
-import RowCell from "./RowCell";
-import TableColumnHeader from "./TableColumnHeader";
+import { Table, TableBody, TableHead, TableRow } from '@mui/material';
+import React, { FC } from 'react';
+import { ResponseOrderRow } from '../../constants/types';
+import { useConfigContext } from '../contexts/useConfigContext';
+import { createRowData, formatOrders, getDecimals } from '../helpers';
+import RowCell from './RowCell';
+import TableColumnHeader from './TableColumnHeader';
 
 interface Props {
   asksData: ResponseOrderRow[];
@@ -21,7 +20,7 @@ const AsksTable: FC<Props> = ({ asksData, decimalAggregation }) => {
     .reverse()
     .map(([price, amount]) => createRowData(Number(price), Number(amount)));
 
-  const tableHeaders = [`Price(${coins[1]})`, `Amount(${coins[0]})`, "Total"];
+  const tableHeaders = [`Price(${coins[1]})`, `Amount(${coins[0]})`, 'Total'];
   const decimals = getDecimals[decimalAggregation];
 
   return (
@@ -32,11 +31,7 @@ const AsksTable: FC<Props> = ({ asksData, decimalAggregation }) => {
             index === 0 ? (
               <TableColumnHeader key={`table-header-${index}`} text={header} />
             ) : (
-              <TableColumnHeader
-                key={`table-header-${index}`}
-                text={header}
-                alignRight
-              />
+              <TableColumnHeader key={`table-header-${index}`} text={header} alignRight />
             )
           )}
         </TableRow>

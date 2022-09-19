@@ -1,9 +1,8 @@
-import { Table, TableBody, TableRow } from "@mui/material";
-import React, { FC } from "react";
-import { ResponseOrderRow } from "../../constants/types";
-import { createRowData, formatOrders } from "../helpers";
-import { getDecimals } from "../helpers/getDecimals";
-import RowCell from "./RowCell";
+import { Table, TableBody, TableRow } from '@mui/material';
+import React, { FC } from 'react';
+import { ResponseOrderRow } from '../../constants/types';
+import { createRowData, formatOrders, getDecimals } from '../helpers';
+import RowCell from './RowCell';
 
 interface Props {
   bidsData: ResponseOrderRow[];

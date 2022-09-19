@@ -1,1 +1,2 @@
-export * from "./formatOrders";
+export * from './formatOrders';
+export * from './getDecimals';

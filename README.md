@@ -27,4 +27,4 @@ To start seeing the order book, the user must input a pair of coin names to form
 
 - The initial form is a controlled form in case validations are needed. In the current code no validations to the form are being made. In case wrong data is inputted, the app will try to connect to binance's API and return an error, giving feedback to the user to check the pair entered.
 
-- Few basic tests have been added, it be great to add more.
+- Few basic tests have been added, it'd be great to add more.

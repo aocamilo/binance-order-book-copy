@@ -1,14 +1,14 @@
-import { Button, Container, Input, InputLabel } from "@mui/material";
-import React, { ChangeEvent } from "react";
-import { useState } from "react";
-import { useConfigContext } from "../contexts/useConfigContext";
+import { Button, Container, Input, InputLabel } from '@mui/material';
+import React, { ChangeEvent } from 'react';
+import { useState } from 'react';
+import { useConfigContext } from '../contexts/useConfigContext';
 
 const SymbolForm = () => {
   const { setCoins } = useConfigContext();
 
   const [{ firstCoin, secondCoin }, setSymbolCoin] = useState({
-    firstCoin: "BTC",
-    secondCoin: "USDT",
+    firstCoin: 'BTC',
+    secondCoin: 'USDT',
   });
 
   const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,16 +29,17 @@ const SymbolForm = () => {
       <InputLabel>Input Symbol (i.e. BTC/USDT)</InputLabel>
       <Container
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          wrap: "nowrap",
+          display: 'flex',
+          flexDirection: 'row',
+          wrap: 'nowrap',
           width: 320,
-          justifyContent: "space-evenly",
+          justifyContent: 'space-evenly',
           marginTop: 2,
           padding: 0,
         }}
       >
         <Input
+          data-testid="first-input"
           placeholder="BTC"
           value={firstCoin}
           name="firstCoin"
@@ -47,13 +48,14 @@ const SymbolForm = () => {
         />
         /
         <Input
+          data-testid="second-input"
           placeholder="USDT"
           value={secondCoin}
           name="secondCoin"
           onChange={onInputChange}
           sx={{ maxWidth: 60 }}
         />
-        <Button onClick={onSubmit} variant="outlined">
+        <Button data-testid="start-button" onClick={onSubmit} variant="outlined">
           Go!
         </Button>
       </Container>
