@@ -1,6 +1,8 @@
 # Binance Order Book Clone!
 
 ![image](https://user-images.githubusercontent.com/21963372/191132086-487300df-5ce4-4cc7-b422-960d22abdb37.png)
+![image](https://user-images.githubusercontent.com/21963372/191132266-3f222d7a-c971-4512-bd74-bb4b7596e0d6.png)
+![image](https://user-images.githubusercontent.com/21963372/191132304-590feae7-a36b-41be-9dde-541ebbdbbc27.png)
 
 # Project setup
 
