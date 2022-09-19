@@ -9,6 +9,13 @@ type ConfigActionType =
   | {
       type: "[Config] - Set coins";
       payload: Coins;
+    }
+  | {
+      type: "[Config] - Set error";
+      payload: string;
+    }
+  | {
+      type: "[Config] - Clear error";
     };
 
 export const ConfigReducer = (
@@ -26,6 +33,18 @@ export const ConfigReducer = (
       return {
         ...state,
         coins: action.payload,
+      };
+
+    case "[Config] - Set error":
+      return {
+        ...state,
+        error: action.payload,
+      };
+
+    case "[Config] - Clear error":
+      return {
+        ...state,
+        error: "",
       };
 
     default:

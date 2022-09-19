@@ -1,12 +1,14 @@
 import { Typography, Container } from "@mui/material";
-import React from "react";
-import { useRealtimeCoinValue } from "../hooks/useRealtimeCoinValue";
+import React, { FC } from "react";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 
-const RealTimeCoinValue = () => {
-  const { currentPrice, lastPrice } = useRealtimeCoinValue();
+interface Props {
+  currentPrice: number;
+  lastPrice: number;
+}
 
+const RealTimeCoinValue: FC<Props> = ({ currentPrice, lastPrice }) => {
   const wentUp = currentPrice >= lastPrice;
 
   return (

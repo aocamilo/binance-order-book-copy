@@ -1,16 +1,23 @@
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
 import React, { FC } from "react";
-import { Row } from "../../constants/types";
 import { useConfigContext } from "../contexts/useConfigContext";
+import { createRowData } from "../helpers";
 import RowCell from "./RowCell";
 import TableColumnHeader from "./TableColumnHeader";
 
 interface Props {
-  rows: Row[];
+  asksData: Record<string, number>;
 }
 
-const AsksTable: FC<Props> = ({ rows }) => {
+const AsksTable: FC<Props> = ({ asksData }) => {
   const { coins } = useConfigContext();
+
+  const rows = Object.entries(asksData)
+    .map(([price, amount]) => [Number(price), amount])
+    .sort(([a], [b]) => a - b)
+    .slice(0, 15)
+    .reverse()
+    .map(([price, amount]) => createRowData(Number(price), Number(amount)));
 
   const tableHeaders = [`Price(${coins[1]})`, `Amount(${coins[0]})`, "Total"];
 

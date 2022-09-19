@@ -7,11 +7,13 @@ import { Coins } from "../../constants/types";
 export interface ConfigState {
   decimalAggregation: number;
   coins: Coins;
+  error: string;
 }
 
 const CONFIG_INITIAL_STATE: ConfigState = {
   decimalAggregation: 0.01,
-  coins: ["BTC", "BUSD"],
+  coins: ["", ""],
+  error: "",
 };
 
 export const ConfigProvider: FC<{ children: React.ReactNode }> = ({
@@ -33,9 +35,28 @@ export const ConfigProvider: FC<{ children: React.ReactNode }> = ({
     });
   };
 
+  const setError = (error: string) => {
+    dispatch({
+      type: "[Config] - Set error",
+      payload: error,
+    });
+  };
+
+  const clearError = () => {
+    dispatch({
+      type: "[Config] - Clear error",
+    });
+  };
+
   return (
     <ConfigContext.Provider
-      value={{ ...state, changeDecimalAggregation, setCoins }}
+      value={{
+        ...state,
+        changeDecimalAggregation,
+        setCoins,
+        setError,
+        clearError,
+      }}
     >
       {children}
     </ConfigContext.Provider>
