@@ -1,3 +1,6 @@
+Binance Order Book Clone!
+![image](https://user-images.githubusercontent.com/21963372/191132086-487300df-5ce4-4cc7-b422-960d22abdb37.png)
+
 # Project setup
 
 After cloning the repo, install the dependencies:
