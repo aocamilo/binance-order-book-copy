@@ -6,15 +6,16 @@ import SelectComponent from "./components/DecimalAggregatorSelect/Select";
 import SymbolForm from "./components/SymbolForm/SymbolForm";
 import { useConfigContext } from "./components/contexts/useConfigContext";
 import { ErrorBoundary } from "react-error-boundary";
-import { Button, Typography } from "@mui/material";
+import { Box, Button, Container, Typography } from "@mui/material";
 
 function ErrorFallback({ error, resetErrorBoundary }: any) {
   return (
-    <div role="alert">
-      <p>Something went wrong:</p>
-      <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
+    <>
+      <Typography variant="h5">{error}</Typography>
+      <Button onClick={resetErrorBoundary} variant="outlined">
+        Try Again
+      </Button>
+    </>
   );
 }
 
@@ -43,12 +44,27 @@ function App() {
         )}
       </ErrorBoundary>
       {error && (
-        <>
-          <Typography variant="h5">{error}</Typography>
-          <Button onClick={handleErrorReset} variant="outlined">
-            Try Again
-          </Button>
-        </>
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              width: 360,
+              height: 560,
+            }}
+          >
+            <Typography variant="h5">{error}</Typography>
+            <Button
+              sx={{ marginY: 2 }}
+              onClick={handleErrorReset}
+              variant="outlined"
+            >
+              Try Again
+            </Button>
+          </Box>
+        </Container>
       )}
     </Layout>
   );

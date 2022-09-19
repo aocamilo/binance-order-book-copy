@@ -7,7 +7,15 @@ interface Props {
 
 export const Layout: FC<Props> = ({ children }) => {
   return (
-    <Box sx={{ flexFlow: 1 }}>
+    <Box
+      sx={{
+        display: "flex",
+        flexFlow: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       <Box>{children}</Box>
     </Box>
   );

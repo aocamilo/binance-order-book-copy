@@ -1,18 +1,22 @@
 import { Table, TableBody, TableRow } from "@mui/material";
 import React, { FC } from "react";
-import { createRowData } from "../helpers";
+import { ResponseOrderRow } from "../../constants/types";
+import { createRowData, formatOrders } from "../helpers";
+import { getDecimals } from "../helpers/getDecimals";
 import RowCell from "./RowCell";
 
 interface Props {
-  bidsData: Record<string, number>;
+  bidsData: ResponseOrderRow[];
+  decimalAggregation: number;
 }
 
-const BidsTable: FC<Props> = ({ bidsData }) => {
-  const rows = Object.entries(bidsData)
-    .map(([price, amount]) => [Number(price), amount])
+const BidsTable: FC<Props> = ({ bidsData, decimalAggregation }) => {
+  const rows = formatOrders(bidsData, decimalAggregation)
     .sort(([a], [b]) => b - a)
     .slice(0, 15)
     .map(([price, amount]) => createRowData(Number(price), Number(amount)));
+
+  const decimals = getDecimals[decimalAggregation];
 
   return (
     <Table aria-label="bids-table">
@@ -29,15 +33,16 @@ const BidsTable: FC<Props> = ({ bidsData }) => {
                     key={`${uuid}-cell-${index}`}
                     textColor="primary"
                     value={value}
-                    decimals={2}
+                    decimals={decimals[index] || 0}
                   ></RowCell>
                 ) : (
                   <RowCell
                     key={`${uuid}-cell-${index}`}
                     textColor="text.primary"
                     value={value}
-                    decimals={5}
+                    decimals={index === 1 ? 5 : decimals[index] || 0}
                     alignRight
+                    total={index === 2}
                   ></RowCell>
                 )
               )}

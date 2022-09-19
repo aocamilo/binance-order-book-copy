@@ -1,18 +1,20 @@
 import { useConfigContext } from "../contexts";
 import { useEffect, useState } from "react";
-import { formatOrders } from "../helpers";
+import {
+  ResponseOrderRow,
+  SnapshotResponse,
+} from "../../constants/types/index";
 
 export const useOrderBookData = () => {
-  const { decimalAggregation, coins, setError } = useConfigContext();
+  const { coins, setError } = useConfigContext();
   const [firstCoin, secondCoin] = coins;
 
-  const [connection, setConnection] = useState<WebSocket>();
   const [connected, setConnected] = useState(false);
 
   const [lastUpdateId, setLastUpdateId] = useState<number>(0);
 
-  const [asksData, setAskData] = useState<Record<string, number>>({});
-  const [bidsData, setBidData] = useState<Record<string, number>>({});
+  const [asksData, setAskData] = useState<ResponseOrderRow[]>([]);
+  const [bidsData, setBidData] = useState<ResponseOrderRow[]>([]);
 
   const [[currentPrice, lastPrice], setCurrentPrice] = useState<
     [number, number]
@@ -26,23 +28,11 @@ export const useOrderBookData = () => {
         const res = await fetch(
           `https://api.binance.com/api/v3/depth?symbol=${symbol}&limit=1000`
         );
-        const json = await res.json();
+        const json: SnapshotResponse = await res.json();
 
         if (json.lastUpdateId) {
           setLastUpdateId(json.lastUpdateId);
-          const ws = new WebSocket(
-            `wss://stream.binance.com/stream?streams=${symbol.toLowerCase()}@depth/${symbol.toLowerCase()}@aggTrade`
-          );
-          setConnection(ws);
           setConnected(true);
-
-          ws.onopen = () => {
-            console.info("Connected with binance WebSocket...");
-          };
-
-          ws.onerror = (error) => {
-            console.error({ error });
-          };
         }
       } catch (error) {
         setError(
@@ -52,12 +42,26 @@ export const useOrderBookData = () => {
     };
 
     initConnection();
-  }, [decimalAggregation]);
+  }, []);
 
   useEffect(() => {
-    if (!connection) return;
+    if (!connected) return;
 
-    connection.onmessage = (event) => {
+    const ws = new WebSocket(
+      `wss://stream.binance.com/stream?streams=${symbol.toLowerCase()}@depth/${symbol.toLowerCase()}@aggTrade`
+    );
+
+    ws.onerror = (error) => {
+      setError(
+        `Error Stablishing a connection with the web socket. Check the symbol and try again... ${error}`
+      );
+    };
+
+    ws.onopen = () => {
+      console.info("Connected with binance WebSocket...");
+    };
+
+    ws.onmessage = (event) => {
       const json = JSON.parse(event.data);
       try {
         if ((json.event = "data")) {
@@ -65,15 +69,11 @@ export const useOrderBookData = () => {
             const { a: asks, b: bids } = json.data;
 
             if (asks.length > 0) {
-              setAskData({
-                ...formatOrders(asks, decimalAggregation),
-              });
+              setAskData(asks);
             }
 
             if (bids.length > 0) {
-              setBidData({
-                ...formatOrders(bids, decimalAggregation),
-              });
+              setBidData(bids);
             }
 
             setLastUpdateId(json.data.u);
@@ -94,13 +94,14 @@ export const useOrderBookData = () => {
       }
     };
 
-    if (connection) return () => connection.close();
-  }, [connection, decimalAggregation]);
+    return () => ws.close();
+  }, [connected]);
 
   return {
     asksData,
     bidsData,
     currentPrice,
     lastPrice,
+    connected,
   };
 };

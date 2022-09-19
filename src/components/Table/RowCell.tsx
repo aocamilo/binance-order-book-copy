@@ -6,9 +6,16 @@ interface Props {
   value: number;
   decimals: number;
   alignRight?: boolean;
+  total?: boolean;
 }
 
-const RowCell: FC<Props> = ({ textColor, alignRight, value, decimals }) => {
+const RowCell: FC<Props> = ({
+  textColor,
+  alignRight,
+  value,
+  decimals,
+  total = false,
+}) => {
   return (
     <TableCell sx={{ width: 95 }}>
       <Typography
@@ -16,7 +23,11 @@ const RowCell: FC<Props> = ({ textColor, alignRight, value, decimals }) => {
         variant="body2"
         color={textColor}
       >
-        {value.toFixed(decimals)}
+        {total
+          ? value.toLocaleString("en", {
+              maximumFractionDigits: decimals,
+            })
+          : value.toFixed(decimals)}
       </Typography>
     </TableCell>
   );

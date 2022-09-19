@@ -1,46 +1,30 @@
-# Getting Started with Create React App
+# Project setup
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+After cloning the repo, install the dependencies:
 
-## Available Scripts
+### `yarn install`
 
-In the project directory, you can run:
+# Start development server
 
-### `npm start`
+### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Run unit tests
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### `yarn test`
 
-### `npm test`
+# Run integration tests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `yarn cypress open`
 
-### `npm run build`
+# Project's Description
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This is a basic clone of binance's Order Book.
+This projects fetches real time asks and bids data using a web socket, and attempts to display it on a similar way
+Binance does.
+To start seeing the order book, the user must input a pair of coin names to form a symbol, i.e. `BTC/USDT`, if user inputs an invalid pair, a basic error component will be displayed, asking the user to check the pair and try again.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Project's Asumptions
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- The initial form is a controlled form in case validations are needed. In the current code no validations to the form are being made. In case wrong data is inputted, the app will try to connect to binance's API and return an error, giving feedback to the user to check the pair entered.
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Few basic tests have been added, it be great to add more.

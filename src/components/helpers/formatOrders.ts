@@ -18,7 +18,10 @@ export const formatOrders = (
         aggregatedData[formattedPrice] += Number(amount);
       }
     });
-  return aggregatedData;
+  return Object.entries(aggregatedData).map(([price, amount]) => [
+    Number(price),
+    amount,
+  ]);
 };
 
 export const createRowData = (price: number, amount: number) => {

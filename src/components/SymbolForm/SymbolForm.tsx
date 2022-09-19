@@ -34,7 +34,6 @@ const SymbolForm = () => {
           wrap: "nowrap",
           width: 320,
           justifyContent: "space-evenly",
-          alignItems: "center",
           marginTop: 2,
           padding: 0,
         }}
@@ -44,7 +43,7 @@ const SymbolForm = () => {
           value={firstCoin}
           name="firstCoin"
           onChange={onInputChange}
-          sx={{ maxWidth: 50 }}
+          sx={{ maxWidth: 60 }}
         />
         /
         <Input
@@ -52,7 +51,7 @@ const SymbolForm = () => {
           value={secondCoin}
           name="secondCoin"
           onChange={onInputChange}
-          sx={{ maxWidth: 50 }}
+          sx={{ maxWidth: 60 }}
         />
         <Button onClick={onSubmit} variant="outlined">
           Go!

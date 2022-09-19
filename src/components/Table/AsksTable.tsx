@@ -1,25 +1,28 @@
 import { Table, TableBody, TableHead, TableRow } from "@mui/material";
 import React, { FC } from "react";
+import { ResponseOrderRow } from "../../constants/types";
 import { useConfigContext } from "../contexts/useConfigContext";
-import { createRowData } from "../helpers";
+import { createRowData, formatOrders } from "../helpers";
+import { getDecimals } from "../helpers/getDecimals";
 import RowCell from "./RowCell";
 import TableColumnHeader from "./TableColumnHeader";
 
 interface Props {
-  asksData: Record<string, number>;
+  asksData: ResponseOrderRow[];
+  decimalAggregation: number;
 }
 
-const AsksTable: FC<Props> = ({ asksData }) => {
+const AsksTable: FC<Props> = ({ asksData, decimalAggregation }) => {
   const { coins } = useConfigContext();
 
-  const rows = Object.entries(asksData)
-    .map(([price, amount]) => [Number(price), amount])
+  const rows = formatOrders(asksData, decimalAggregation)
     .sort(([a], [b]) => a - b)
     .slice(0, 15)
     .reverse()
     .map(([price, amount]) => createRowData(Number(price), Number(amount)));
 
   const tableHeaders = [`Price(${coins[1]})`, `Amount(${coins[0]})`, "Total"];
+  const decimals = getDecimals[decimalAggregation];
 
   return (
     <Table aria-label="ask-table">
@@ -50,14 +53,14 @@ const AsksTable: FC<Props> = ({ asksData }) => {
                     key={`${uuid}-cell-${index}`}
                     textColor="secondary"
                     value={value}
-                    decimals={2}
+                    decimals={decimals[index] || 0}
                   ></RowCell>
                 ) : (
                   <RowCell
                     key={`${uuid}-cell-${index}`}
                     textColor="text.primary"
                     value={value}
-                    decimals={5}
+                    decimals={index === 1 ? 5 : decimals[index] || 0}
                     alignRight
                   ></RowCell>
                 )
